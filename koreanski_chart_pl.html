@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm;
+            background-color: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #ffffff;
+        }
+        .container {
+            width: 100%;
+            padding: 10px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #1a4a7a;
+            margin: 0;
+            font-size: 24pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section {
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        .consonants {
+            background-color: #e0f4f7;
+            border: 2px solid #b2e0e6;
+        }
+        .vowels {
+            background-color: #fff9e6;
+            border: 2px solid #ffeeba;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-transform: uppercase;
+        }
+        .category-label {
+            text-align: center;
+            font-weight: bold;
+            color: #d9534f;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 12pt;
+        }
+        .grid {
+            display: table;
+            width: 100%;
+            border-spacing: 10px;
+        }
+        .grid-row {
+            display: table-row;
+        }
+        .card {
+            display: table-cell;
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            width: 11%;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .hangul {
+            font-size: 24pt;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        .pronunciation {
+            font-size: 12pt;
+            color: #555;
+            font-weight: bold;
+        }
+        .romanization {
+            font-size: 8pt;
+            color: #999;
+            font-style: italic;
+        }
+        .special-note {
+            font-size: 7pt;
+            color: #d9534f;
+            display: block;
+            margin-top: 3px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+            <!-- SPÓŁGŁOSKI -->
+        <div class="section consonants">
+            <div class="section-title">Spółgłoski</div>
+            
+            <div class="category-label">Podstawowe</div>
+            <div class="grid">
+                <div class="grid-row">
+                    <div class="card"><span class="hangul">ㄱ</span><span class="pronunciation">g / k</span><span class="romanization">(g/k)</span></div>
+                    <div class="card"><span class="hangul">ㄴ</span><span class="pronunciation">n</span><span class="romanization">(n)</span></div>
+                    <div class="card"><span class="hangul">ㄷ</span><span class="pronunciation">d / t</span><span class="romanization">(d/t)</span></div>
+                    <div class="card"><span class="hangul">ㄹ</span><span class="pronunciation">r / l</span><span class="romanization">(r/l)</span></div>
+                    <div class="card"><span class="hangul">ㅁ</span><span class="pronunciation">m</span><span class="romanization">(m)</span></div>
+                    <div class="card"><span class="hangul">ㅂ</span><span class="pronunciation">b / p</span><span class="romanization">(b/p)</span></div>
+                    <div class="card"><span class="hangul">ㅅ</span><span class="pronunciation">s / ś</span><span class="romanization">(s)</span></div>
+                    <div class="card"><span class="hangul">ㅇ</span><span class="pronunciation">- / ng</span><span class="romanization">(ng)</span></div>
+                    <div class="card"><span class="hangul">ㅈ</span><span class="pronunciation">dź / dż</span><span class="romanization">(j)</span></div>
+                </div>
+            </div>
+
+            <div class="category-label">Aspirowane (z wydechem)</div>
+            <div class="grid">
+                <div class="grid-row">
+                    <div class="card" style="width: 25%"><span class="hangul">ㅋ</span><span class="pronunciation">kh</span><span class="romanization">(k)</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅌ</span><span class="pronunciation">th</span><span class="romanization">(t)</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅍ</span><span class="pronunciation">ph</span><span class="romanization">(p)</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅊ</span><span class="pronunciation">ć / cz</span><span class="romanization">(ch)</span></div>
+                </div>
+            </div>
+
+            <div class="category-label">Podwójne (mocne)</div>
+            <div class="grid">
+                <div class="grid-row">
+                    <div class="card" style="width: 20%"><span class="hangul">ㄲ</span><span class="pronunciation">k!</span><span class="romanization">(kk)</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㄸ</span><span class="pronunciation">t!</span><span class="romanization">(tt)</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅃ</span><span class="pronunciation">p!</span><span class="romanization">(pp)</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅆ</span><span class="pronunciation">s!</span><span class="romanization">(ss)</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅉ</span><span class="pronunciation">ć! / cz!</span><span class="romanization">(jj)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAMOGŁOSKI -->
+        <div class="section vowels">
+            <div class="section-title">Samogłoski</div>
+            
+            <div class="category-label">Podstawowe</div>
+            <div class="grid">
+                <div class="grid-row">
+                    <div class="card"><span class="hangul">ㅏ</span><span class="pronunciation">a</span></div>
+                    <div class="card"><span class="hangul">ㅑ</span><span class="pronunciation">ja</span></div>
+                    <div class="card"><span class="hangul">ㅓ</span><span class="pronunciation">o (otw.)</span></div>
+                    <div class="card"><span class="hangul">ㅕ</span><span class="pronunciation">jo (otw.)</span></div>
+                    <div class="card"><span class="hangul">ㅗ</span><span class="pronunciation">o</span></div>
+                    <div class="card"><span class="hangul">ㅛ</span><span class="pronunciation">jo</span></div>
+                    <div class="card"><span class="hangul">ㅜ</span><span class="pronunciation">u</span></div>
+                </div>
+                <div class="grid-row">
+                    <div class="card"><span class="hangul">ㅠ</span><span class="pronunciation">ju</span></div>
+                    <div class="card"><span class="hangul">ㅡ</span><span class="pronunciation">y (płaskie)</span></div>
+                    <div class="card"><span class="hangul">ㅣ</span><span class="pronunciation">i</span></div>
+                    <div class="card"><span class="hangul">ㅐ</span><span class="pronunciation">e</span></div>
+                    <div class="card"><span class="hangul">ㅒ</span><span class="pronunciation">je</span></div>
+                    <div class="card"><span class="hangul">ㅔ</span><span class="pronunciation">e</span></div>
+                    <div class="card"><span class="hangul">ㅖ</span><span class="pronunciation">je</span></div>
+                </div>
+            </div>
+
+            <div class="category-label">Złożone (Dyftongi)</div>
+            <div class="grid">
+                <div class="grid-row">
+                    <div class="card"><span class="hangul">ㅘ</span><span class="pronunciation">ła</span></div>
+                    <div class="card"><span class="hangul">ㅙ</span><span class="pronunciation">łe</span></div>
+                    <div class="card"><span class="hangul">ㅚ</span><span class="pronunciation">łe</span></div>
+                    <div class="card"><span class="hangul">ㅝ</span><span class="pronunciation">ło</span></div>
+                    <div class="card"><span class="hangul">ㅞ</span><span class="pronunciation">łe</span></div>
+                    <div class="card"><span class="hangul">ㅟ</span><span class="pronunciation">łi</span></div>
+                    <div class="card"><span class="hangul">ㅢ</span><span class="pronunciation">yi</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
