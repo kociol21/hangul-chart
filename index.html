@@ -104,6 +104,19 @@
             margin-top: 3px;
             line-height: 1;
         }
+        .card {
+    transition: all 0.2s ease; /* Płynne przejście efektu */
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: #f0f8ff; /* Jasnobłękitny kolor tła po najechaniu */
+    transform: scale(1.1);    /* Lekkie powiększenie o 10% */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Delikatny cień pod spodem */
+    border-color: #1a4a7a;    /* Zmiana koloru obramowania na ciemniejszy */
+    z-index: 10;              /* Żeby powiększona karta była nad innymi */
+    position: relative;
+}
     </style>
 </head>
 <body>
