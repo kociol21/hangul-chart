@@ -238,15 +238,79 @@
             pointer-events: none;
         }
         .card.copied { position: relative; }
+        /* DZIAŁY: TEORIA / PRAKTYKA */
+        .main-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 10px 0;
+            background: #1a4a7a;
+        }
+        .main-btn {
+            font: inherit;
+            font-size: 12pt;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            padding: 8px 22px;
+            cursor: pointer;
+        }
+        .main-btn.active { background: #ffffff; color: #1a4a7a; }
+        .main-btn:disabled { color: #9fb6cc; cursor: default; }
+        .main-btn .soon {
+            font-size: 8pt;
+            text-transform: none;
+            letter-spacing: 0;
+            background: #2f6699;
+            color: #dce8f3;
+            border-radius: 6px;
+            padding: 1px 6px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        /* GRAMATYKA I KOŃCÓWKI */
+        .grammar {
+            background-color: #eef7ee;
+            border: 2px solid #cfe8cf;
+        }
+        .grammar .category-label { margin-top: 25px; }
+        .grammar .rules-grid { margin-bottom: 5px; }
+        .grammar .rule p, .grammar .schema { word-break: keep-all; }
+        .sentences {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .sentences li {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            padding: 6px 0;
+            border-top: 1px dashed #eee;
+        }
+        .sentences .kr { font-size: 14pt; font-weight: bold; color: #000; }
+        .sentences .ph { font-size: 10.5pt; color: #1a4a7a; }
+        .sentences .tr { font-size: 10.5pt; color: #555; }
         @media print {
-            .tabs { display: none; }
+            .tabs, .main-tabs { display: none; }
         }
     </style>
 </head>
 <body>
+    <nav class="main-tabs" aria-label="Dział">
+        <button class="main-btn active" aria-current="page">Teoria</button>
+        <button class="main-btn" disabled title="Ćwiczenia pojawią się później">Praktyka <span class="soon">wkrótce</span></button>
+    </nav>
     <nav class="tabs" role="tablist">
         <button class="tab-btn active" role="tab" data-tab="alfabet">Alfabet</button>
-        <button class="tab-btn" role="tab" data-tab="zasady">Zasady wymowy</button>
+        <button class="tab-btn" role="tab" data-tab="zasady">Wymowa</button>
+        <button class="tab-btn" role="tab" data-tab="gramatyka">Gramatyka</button>
+        <button class="tab-btn" role="tab" data-tab="koncowki">Końcówki</button>
     </nav>
 
     <div class="container">
@@ -489,6 +553,428 @@
                 </div>
             </div>
         </div>
+
+        <div class="tab-panel" id="gramatyka" role="tabpanel">
+            <div class="section grammar">
+                <div class="section-title">Gramatyka</div>
+                <p class="rules-intro">Budowa zdania, partykuły (koreański odpowiednik przypadków), zaimki i liczby. Pod każdym przykładem jest polska wymowa w cudzysłowie i tłumaczenie. Wykrzyknik oznacza mocną spółgłoskę.</p>
+                <div class="category-label">Budowa zdania</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">1.</span>Szyk zdania: czasownik na końcu</h3>
+                    <p>Podstawowy szyk to: kto, co, robi. Czasownik zawsze stoi na samym końcu zdania.</p>
+                    <p>W polskim szyk jest swobodny, bo rolę słowa pokazuje przypadek. W koreańskim rolę pokazuje partykuła, więc reszta słów może się przesuwać, ale czasownik zostaje na końcu.</p>
+                    <div class="schema">KTO + CO + ROBI → 저는 + 밥을 + 먹어요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">저는 밥을 먹어요.</span><span class="ph">„czonyn pabyl mogojo”</span><span class="tr">Jem ryż (posiłek).</span></li>
+                        <li><span class="kr">친구가 책을 읽어요.</span><span class="ph">„czinguga czegyl ilgojo”</span><span class="tr">Przyjaciel czyta książkę.</span></li>
+                        <li><span class="kr">저는 학교에 가요.</span><span class="ph">„czonyn hakk!joe kajo”</span><span class="tr">Idę do szkoły.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">2.</span>Pomijanie podmiotu</h3>
+                    <p>Tak jak w polskim mówimy „idę” zamiast „ja idę”, po koreańsku pomija się podmiot, gdy z kontekstu wiadomo, o kogo chodzi. W rozmowie często znika też dopełnienie.</p>
+                    <p>Różnica: polski czasownik sam mówi, kto działa (idę, idziesz). Koreański nie, więc „kto” trzeba wyczytać z sytuacji.</p>
+                    <div class="schema">(저는) 가요 → 가요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">가요.</span><span class="ph">„kajo”</span><span class="tr">Idę. / Idziesz? / Idzie. (zależnie od sytuacji)</span></li>
+                        <li><span class="kr">배고파요.</span><span class="ph">„pegophajo”</span><span class="tr">Jestem głodny.</span></li>
+                        <li><span class="kr">뭐 먹어요?</span><span class="ph">„mło mogojo?”</span><span class="tr">Co jesz?</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">3.</span>„X jest Y”: 이에요 / 예요</h3>
+                    <p>Polskie „jestem / jest + rzeczownik” to końcówka doczepiana prosto do rzeczownika: po spółgłosce 이에요, po samogłosce 예요.</p>
+                    <p>Przeczenie „nie jest” to 이/가 아니에요. Z przymiotnikami tego się nie używa, bo przymiotniki odmieniają się same (patrz zakładka Końcówki).</p>
+                    <div class="schema">spółgłoska + 이에요 · samogłoska + 예요 · 아니에요 = nie jest</div>
+                    <ul class="sentences">
+                        <li><span class="kr">저는 학생이에요.</span><span class="ph">„czonyn haks!engijejo”</span><span class="tr">Jestem uczniem / studentem.</span></li>
+                        <li><span class="kr">이건 커피예요.</span><span class="ph">„igon khophijejo”</span><span class="tr">To jest kawa.</span></li>
+                        <li><span class="kr">저는 의사가 아니에요.</span><span class="ph">„czonyn yisaga anijejo”</span><span class="tr">Nie jestem lekarzem.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">4.</span>있어요 / 없어요: jest, mam, nie ma</h3>
+                    <p>있다 znaczy „być (gdzieś), istnieć”, ale też „mieć”. 없다 to jego przeciwieństwo: „nie ma, nie mieć”.</p>
+                    <p>Polskie „mam kota” po koreańsku brzmi dosłownie „kot jest (u mnie)”.</p>
+                    <div class="schema">X이/가 있어요 = jest X / mam X · X이/가 없어요 = nie ma X</div>
+                    <ul class="sentences">
+                        <li><span class="kr">시간이 있어요?</span><span class="ph">„sigani is!ojo?”</span><span class="tr">Masz czas?</span></li>
+                        <li><span class="kr">돈이 없어요.</span><span class="ph">„toni ops!ojo”</span><span class="tr">Nie mam pieniędzy.</span></li>
+                        <li><span class="kr">고양이가 있어요.</span><span class="ph">„kojangiga is!ojo”</span><span class="tr">Mam kota. / Jest kot.</span></li>
+                    </ul>
+                </div>
+                </div>
+                <div class="category-label">Partykuły zamiast przypadków</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">5.</span>Jak działają partykuły</h3>
+                    <p>W polskim rzeczownik zmienia końcówkę: kot, kota, kotu, kotem. W koreańskim rzeczownik zostaje bez zmian, a jego rolę w zdaniu pokazuje krótka partykuła doczepiona na końcu.</p>
+                    <p>Wiele partykuł ma dwie formy: jedną po spółgłosce, drugą po samogłosce. Chodzi tylko o wygodę wymowy, znaczenie jest to samo.</p>
+                    <div class="schema">rzeczownik (bez zmian) + partykuła</div>
+                    <ul class="sentences">
+                        <li><span class="kr">친구가</span><span class="ph">„czinguga”</span><span class="tr">przyjaciel (kto?)</span></li>
+                        <li><span class="kr">친구를</span><span class="ph">„czinguryl”</span><span class="tr">przyjaciela (kogo?)</span></li>
+                        <li><span class="kr">친구한테</span><span class="ph">„czinguhanthe”</span><span class="tr">przyjacielowi (komu?)</span></li>
+                    </ul>
+                    <p class="note">W mowie potocznej partykuły często się pomija.</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">6.</span>Temat 은 / 는</h3>
+                    <p>Oznacza temat zdania: „jeśli chodzi o…”. Używa się jej, gdy się przedstawiamy, mówimy coś ogólnie albo przeciwstawiamy dwie rzeczy.</p>
+                    <p>W polskim nie ma odpowiednika, najbliżej jest „a ja…”, „co do…”.</p>
+                    <div class="schema">spółgłoska + 은 · samogłoska + 는</div>
+                    <ul class="sentences">
+                        <li><span class="kr">저는 폴란드 사람이에요.</span><span class="ph">„czonyn phollandy saramijejo”</span><span class="tr">Jestem Polakiem.</span></li>
+                        <li><span class="kr">오늘은 추워요.</span><span class="ph">„onyryn czułojo”</span><span class="tr">Dziś jest zimno.</span></li>
+                        <li><span class="kr">커피는 좋아요, 차는 싫어요.</span><span class="ph">„khophinyn czoajo, czanyn sirojo”</span><span class="tr">Kawę lubię, a herbaty nie.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">7.</span>Podmiot 이 / 가</h3>
+                    <p>Odpowiednik mianownika: wskazuje, kto lub co coś robi albo jest. W porównaniu z 은/는 kładzie nacisk na samą osobę lub rzecz („to właśnie on”).</p>
+                    <p>Stoi przy nowych informacjach i w pytaniach o to, kto lub co: 누가, 뭐가.</p>
+                    <div class="schema">spółgłoska + 이 · samogłoska + 가</div>
+                    <ul class="sentences">
+                        <li><span class="kr">비가 와요.</span><span class="ph">„piga łajo”</span><span class="tr">Pada deszcz.</span></li>
+                        <li><span class="kr">누가 왔어요?</span><span class="ph">„nuga łas!ojo?”</span><span class="tr">Kto przyszedł?</span></li>
+                        <li><span class="kr">제가 할게요.</span><span class="ph">„czega halk!ejo”</span><span class="tr">Ja to zrobię.</span></li>
+                    </ul>
+                    <p class="note">Formy nieregularne: 저 + 가 → 제가, 나 + 가 → 내가, 누구 + 가 → 누가.</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">8.</span>Dopełnienie 을 / 를</h3>
+                    <p>Odpowiednik biernika (kogo? co?). Oznacza to, na co działa czasownik: co jem, co oglądam, czego się uczę.</p>
+                    <div class="schema">spółgłoska + 을 · samogłoska + 를</div>
+                    <ul class="sentences">
+                        <li><span class="kr">물을 마셔요.</span><span class="ph">„mulyl masiojo”</span><span class="tr">Piję wodę.</span></li>
+                        <li><span class="kr">영화를 봐요.</span><span class="ph">„jonghłaryl płajo”</span><span class="tr">Oglądam film.</span></li>
+                        <li><span class="kr">한국어를 배워요.</span><span class="ph">„hangugoryl pełojo”</span><span class="tr">Uczę się koreańskiego.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">9.</span>의: czyj?</h3>
+                    <p>Odpowiednik dopełniacza w znaczeniu posiadania (czyj?). W tej roli 의 czyta się jak „e”.</p>
+                    <p>W mowie często się go pomija i dwa rzeczowniki stoją po prostu obok siebie: najpierw posiadacz, potem rzecz.</p>
+                    <div class="schema">posiadacz + 의 + rzecz · 저의 → 제 · 나의 → 내</div>
+                    <ul class="sentences">
+                        <li><span class="kr">친구의 집</span><span class="ph">„czingue czip”</span><span class="tr">dom przyjaciela</span></li>
+                        <li><span class="kr">제 이름</span><span class="ph">„cze irym”</span><span class="tr">moje imię</span></li>
+                        <li><span class="kr">엄마 가방</span><span class="ph">„omma kabang”</span><span class="tr">torba mamy</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">10.</span>에: gdzie, dokąd, kiedy</h3>
+                    <p>Jedna partykuła zastępuje kilka polskich przyimków: „w / na” (gdzie coś jest), „do” (dokąd idę) oraz „o / w” (kiedy). Ma jedną formę, bez względu na spółgłoskę.</p>
+                    <div class="schema">miejsce + 에 있어요 · miejsce + 에 가요 · czas + 에</div>
+                    <ul class="sentences">
+                        <li><span class="kr">집에 있어요.</span><span class="ph">„czibe is!ojo”</span><span class="tr">Jestem w domu.</span></li>
+                        <li><span class="kr">학교에 가요.</span><span class="ph">„hakk!joe kajo”</span><span class="tr">Idę do szkoły.</span></li>
+                        <li><span class="kr">세 시에 만나요.</span><span class="ph">„se sie mannajo”</span><span class="tr">Spotkajmy się o trzeciej.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">11.</span>에서: gdzie coś robię, skąd</h3>
+                    <p>Też „w / na”, ale przy czynności: gdzie coś się dzieje. Łatwo zapamiętać: 에 = gdzie jestem, 에서 = gdzie coś robię.</p>
+                    <p>Drugie znaczenie to „z” w sensie „skąd”.</p>
+                    <div class="schema">miejsce + 에서 + czynność · skąd + 에서</div>
+                    <ul class="sentences">
+                        <li><span class="kr">카페에서 커피를 마셔요.</span><span class="ph">„khapheeso khophiryl masiojo”</span><span class="tr">Piję kawę w kawiarni.</span></li>
+                        <li><span class="kr">집에서 쉬어요.</span><span class="ph">„czibeso słiojo”</span><span class="tr">Odpoczywam w domu.</span></li>
+                        <li><span class="kr">폴란드에서 왔어요.</span><span class="ph">„phollandyeso łas!ojo”</span><span class="tr">Przyjechałem z Polski.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">12.</span>하고 / (이)랑 / 와·과: z, i</h3>
+                    <p>Odpowiednik „z” (z kim?) oraz spójnika „i” między rzeczownikami. Wszystkie trzy znaczą to samo, różnią się stylem: 하고 jest neutralne, (이)랑 potoczne, 와/과 pisane i formalne.</p>
+                    <div class="schema">하고 · 이랑 / 랑 · 과 / 와 (po spółgłosce / po samogłosce)</div>
+                    <ul class="sentences">
+                        <li><span class="kr">친구하고 영화를 봐요.</span><span class="ph">„czinguhago jonghłaryl płajo”</span><span class="tr">Oglądam film z przyjacielem.</span></li>
+                        <li><span class="kr">빵이랑 우유</span><span class="ph">„p!angirang uju”</span><span class="tr">chleb i mleko</span></li>
+                        <li><span class="kr">엄마와 아빠</span><span class="ph">„ommała ap!a”</span><span class="tr">mama i tata</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">13.</span>(으)로: czym, w którą stronę</h3>
+                    <p>Odpowiednik narzędnika „czym?”: narzędzie, środek transportu, język. Oznacza też kierunek: „w stronę, do”.</p>
+                    <div class="schema">spółgłoska + 으로 · samogłoska i ㄹ + 로</div>
+                    <ul class="sentences">
+                        <li><span class="kr">버스로 가요.</span><span class="ph">„posyro kajo”</span><span class="tr">Jadę autobusem.</span></li>
+                        <li><span class="kr">한국어로 말해요.</span><span class="ph">„hangugoro marejo”</span><span class="tr">Mówię po koreańsku.</span></li>
+                        <li><span class="kr">젓가락으로 먹어요.</span><span class="ph">„czok!aragyro mogojo”</span><span class="tr">Jem pałeczkami.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">14.</span>에게 / 한테: komu?</h3>
+                    <p>Odpowiednik celownika (komu?) przy ludziach i zwierzętach: komu daję, do kogo dzwonię, komu mówię. 한테 jest potoczne, 에게 bardziej staranne.</p>
+                    <p>Przy rzeczach i miejscach zamiast tego używa się 에.</p>
+                    <div class="schema">osoba + 한테 / 에게</div>
+                    <ul class="sentences">
+                        <li><span class="kr">친구한테 전화해요.</span><span class="ph">„czinguhanthe czonłahejo”</span><span class="tr">Dzwonię do przyjaciela.</span></li>
+                        <li><span class="kr">엄마에게 선물을 줘요.</span><span class="ph">„ommaege sonmuryl człojo”</span><span class="tr">Daję mamie prezent.</span></li>
+                        <li><span class="kr">고양이한테 밥을 줘요.</span><span class="ph">„kojangihanthe pabyl człojo”</span><span class="tr">Daję kotu jedzenie.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">15.</span>도: też · 만: tylko</h3>
+                    <p>도 znaczy „też, również”, a 만 „tylko”. Zastępują 은/는, 이/가 i 을/를 (nie stawia się ich razem), ale można je doczepić po innych partykułach: 에도, 에서만.</p>
+                    <div class="schema">저도 = ja też · 물만 = tylko wodę</div>
+                    <ul class="sentences">
+                        <li><span class="kr">저도 좋아요.</span><span class="ph">„czodo czoajo”</span><span class="tr">Ja też lubię. / Mi też pasuje.</span></li>
+                        <li><span class="kr">물만 마셔요.</span><span class="ph">„mulman masiojo”</span><span class="tr">Piję tylko wodę.</span></li>
+                        <li><span class="kr">주말에도 일해요.</span><span class="ph">„czumaredo irejo”</span><span class="tr">Pracuję też w weekend.</span></li>
+                    </ul>
+                </div>
+                </div>
+                <div class="category-label">Rzeczowniki, zaimki, liczby</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">16.</span>Liczba mnoga 들 i brak rodzajów</h3>
+                    <p>W polskim rzeczownik ma rodzaj i liczbę, które zmieniają resztę zdania. W koreańskim rodzajów nie ma, a liczba mnoga jest opcjonalna: 사과 może znaczyć „jabłko” albo „jabłka”.</p>
+                    <p>Końcówki 들 używa się głównie przy ludziach, gdy chce się podkreślić, że jest ich wielu.</p>
+                    <div class="schema">사람 = człowiek / ludzie · 사람들 = ludzie (wielu)</div>
+                    <ul class="sentences">
+                        <li><span class="kr">사과 세 개</span><span class="ph">„sagła se ge”</span><span class="tr">trzy jabłka (bez 들!)</span></li>
+                        <li><span class="kr">친구들이 왔어요.</span><span class="ph">„czingudyri łas!ojo”</span><span class="tr">Przyszli przyjaciele.</span></li>
+                        <li><span class="kr">학생들</span><span class="ph">„haks!engdyl”</span><span class="tr">uczniowie</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">17.</span>Zaimki osobowe</h3>
+                    <p>Jest wersja skromna (grzeczna) i zwykła: 저 / 나 „ja”, 저희 / 우리 „my”. „Ty” (너) mówi się tylko do bliskich i młodszych. Do innych zwraca się po imieniu z 씨 albo tytułem, np. 선생님.</p>
+                    <p>„On / ona” (그 / 그녀) to raczej język pisany, w mowie mówi się 그 사람 „ta osoba”. 우리 znaczy też „mój” w sensie wspólnym: 우리 엄마 = moja mama.</p>
+                    <div class="schema">ja 저 / 나 · ty 너 · my 저희 / 우리 · on, ona 그 사람</div>
+                    <ul class="sentences">
+                        <li><span class="kr">민수 씨, 어디 가요?</span><span class="ph">„minsu s!i, odi kajo?”</span><span class="tr">Minsu, dokąd idziesz?</span></li>
+                        <li><span class="kr">너 뭐 해?</span><span class="ph">„no mło he?”</span><span class="tr">Co robisz? (do bliskiej osoby)</span></li>
+                        <li><span class="kr">우리 엄마예요.</span><span class="ph">„uri ommajejo”</span><span class="tr">To moja mama.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">18.</span>이 · 그 · 저: ten, tamten</h3>
+                    <p>Trzy stopnie „ten”: 이 = blisko mnie, 그 = blisko ciebie albo coś już wspomnianego, 저 = daleko od nas obu. W polskim mamy tylko „ten / tamten”.</p>
+                    <p>Od nich tworzy się „to” (이거, 그거, 저거) i „tutaj / tam” (여기, 거기, 저기).</p>
+                    <div class="schema">이 / 그 / 저 + 거 = to · 여기 / 거기 / 저기 = tu / tam / tam daleko</div>
+                    <ul class="sentences">
+                        <li><span class="kr">이거 뭐예요?</span><span class="ph">„igo młojejo?”</span><span class="tr">Co to jest?</span></li>
+                        <li><span class="kr">그 사람 누구예요?</span><span class="ph">„ky saram nugujejo?”</span><span class="tr">Kim jest ta osoba?</span></li>
+                        <li><span class="kr">화장실은 저기 있어요.</span><span class="ph">„hładzangsiryn czogi is!ojo”</span><span class="tr">Toaleta jest tam.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">19.</span>Słowa pytające</h3>
+                    <p>Słowo pytające stoi w zdaniu tam, gdzie stałaby odpowiedź, a nie na początku, jak w polskim. Reszta zdania się nie zmienia.</p>
+                    <div class="schema">뭐 co · 누구 kto · 어디 gdzie · 언제 kiedy · 왜 dlaczego · 어떻게 jak · 몇 ile</div>
+                    <ul class="sentences">
+                        <li><span class="kr">어디 가요?</span><span class="ph">„odi kajo?”</span><span class="tr">Dokąd idziesz?</span></li>
+                        <li><span class="kr">언제 와요?</span><span class="ph">„ondze łajo?”</span><span class="tr">Kiedy przyjdziesz?</span></li>
+                        <li><span class="kr">왜 울어요?</span><span class="ph">„łe urojo?”</span><span class="tr">Dlaczego płaczesz?</span></li>
+                    </ul>
+                    <p class="note">어떻게 czyta się „ot!okhe”.</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">20.</span>Liczby: dwa systemy</h3>
+                    <p>Są dwa zestawy liczebników. Rodzime (하나, 둘, 셋…) służą do liczenia sztuk, osób, wieku i godzin. Chińsko-koreańskie (일, 이, 삼…) do dat, pieniędzy, numerów i minut.</p>
+                    <p>Do liczebnika dodaje się licznik, trochę jak polskie „sztuka”: 개 rzeczy, 명 osoby, 살 lata.</p>
+                    <div class="schema">rodzime: 하나 둘 셋 넷 다섯 · chińskie: 일 이 삼 사 오</div>
+                    <ul class="sentences">
+                        <li><span class="kr">사과 두 개</span><span class="ph">„sagła tu ge”</span><span class="tr">dwa jabłka</span></li>
+                        <li><span class="kr">세 명</span><span class="ph">„se mjong”</span><span class="tr">trzy osoby</span></li>
+                        <li><span class="kr">오천 원</span><span class="ph">„oczon łon”</span><span class="tr">pięć tysięcy wonów</span></li>
+                        <li><span class="kr">스무 살</span><span class="ph">„symu sal”</span><span class="tr">20 lat</span></li>
+                    </ul>
+                    <p class="note">Przed licznikiem rodzime skracają się: 하나 → 한, 둘 → 두, 셋 → 세, 넷 → 네, 스물 → 스무.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-panel" id="koncowki" role="tabpanel">
+            <div class="section grammar">
+                <div class="section-title">Końcówki</div>
+                <p class="rules-intro">Koreański czasownik zmienia się wyłącznie przez końcówki: czas, przeczenie, grzeczność i łączenie zdań. Pod każdym przykładem jest polska wymowa w cudzysłowie i tłumaczenie. Wykrzyknik oznacza mocną spółgłoskę.</p>
+                <div class="category-label">Czasownik od podstaw</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">1.</span>Przymiotniki to czasowniki</h3>
+                    <p>W polskim „ładny” to przymiotnik, a „jest” to osobny czasownik. W koreańskim 예쁘다 znaczy od razu „być ładnym” i odmienia się jak każdy czasownik.</p>
+                    <p>W słowniku każdy czasownik kończy się na 다. To, co stoi przed 다, to rdzeń, i do niego doczepia się końcówki.</p>
+                    <div class="schema">rdzeń + 다 → 먹 + 다 · rdzeń + końcówka → 먹어요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">먹다 → 먹어요</span><span class="ph">„mokt!a → mogojo”</span><span class="tr">jeść → jem</span></li>
+                        <li><span class="kr">예쁘다 → 예뻐요</span><span class="ph">„jep!yda → jep!ojo”</span><span class="tr">być ładnym → jest ładna</span></li>
+                        <li><span class="kr">크다 → 커요</span><span class="ph">„khyda → khojo”</span><span class="tr">być dużym → jest duży</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">2.</span>Brak odmiany przez osoby</h3>
+                    <p>W polskim: jem, jesz, je, jemy. W koreańskim jest jedna forma dla wszystkich osób. Końcówka mówi za to o czasie i o tym, jak grzecznie mówimy.</p>
+                    <p>Kto wykonuje czynność, wynika z partykuły albo z kontekstu.</p>
+                    <div class="schema">저는 / 너는 / 친구는 / 우리는 + 가요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">저는 가요.</span><span class="ph">„czonyn kajo”</span><span class="tr">Ja idę.</span></li>
+                        <li><span class="kr">친구는 가요.</span><span class="ph">„czingunyn kajo”</span><span class="tr">Przyjaciel idzie.</span></li>
+                        <li><span class="kr">우리는 가요.</span><span class="ph">„urinyn kajo”</span><span class="tr">My idziemy.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">3.</span>Odmiana 아요 / 어요</h3>
+                    <p>Podstawowa grzeczna forma czasu teraźniejszego. Patrzymy na ostatnią samogłoskę rdzenia: jeśli to ㅏ lub ㅗ, dodajemy 아요, w każdym innym przypadku 어요. Czasowniki na 하다 zawsze dają 해요.</p>
+                    <p>Gdy rdzeń kończy się samogłoską, samogłoski się zlewają: 가 + 아요 → 가요, 오 + 아요 → 와요.</p>
+                    <div class="schema">ㅏ ㅗ → 아요 · inne → 어요 · 하다 → 해요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">좋다 → 좋아요</span><span class="ph">„czoajo”</span><span class="tr">jest dobrze / lubię</span></li>
+                        <li><span class="kr">먹다 → 먹어요</span><span class="ph">„mogojo”</span><span class="tr">jem</span></li>
+                        <li><span class="kr">공부하다 → 공부해요</span><span class="ph">„kongbuhejo”</span><span class="tr">uczę się</span></li>
+                        <li><span class="kr">오다 → 와요</span><span class="ph">„łajo”</span><span class="tr">przychodzę</span></li>
+                    </ul>
+                    <p class="note">Ta sama forma bez 요 to mowa nieformalna (patrz poziomy grzeczności).</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">4.</span>Czas przeszły 았 / 었</h3>
+                    <p>Działa ta sama zasada samogłoski: do rdzenia dodaje się 았 (po ㅏ ㅗ) albo 었 (po innych), a 하다 zmienia się w 했. Na końcu idzie 어요.</p>
+                    <p>W polskim czas przeszły zmienia się przez osobę i rodzaj (jadłem, jadła, jedli). Tu jest jedna forma dla wszystkich.</p>
+                    <div class="schema">았어요 · 었어요 · 했어요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">먹었어요.</span><span class="ph">„mogos!ojo”</span><span class="tr">Jadłem / jadłaś / jedli…</span></li>
+                        <li><span class="kr">갔어요.</span><span class="ph">„kas!ojo”</span><span class="tr">Poszedłem.</span></li>
+                        <li><span class="kr">공부했어요.</span><span class="ph">„kongbuhes!ojo”</span><span class="tr">Uczyłem się.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">5.</span>Przyszłość: (으)ㄹ 거예요</h3>
+                    <p>Najczęstsza forma przyszła, znaczy też „zamierzam”. Po samogłosce w rdzeniu dodaje się ㄹ 거예요, po spółgłosce 을 거예요. Nieformalnie: ㄹ 거야.</p>
+                    <p>O sobie, jako obietnicę albo decyzję („to ja zrobię”), mówi się też (으)ㄹ게요.</p>
+                    <div class="schema">samogłoska + ㄹ 거예요 · spółgłoska + 을 거예요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">내일 갈 거예요.</span><span class="ph">„neil kal k!ojejo”</span><span class="tr">Pójdę jutro.</span></li>
+                        <li><span class="kr">뭐 먹을 거예요?</span><span class="ph">„mło mogyl k!ojejo?”</span><span class="tr">Co będziesz jadł?</span></li>
+                        <li><span class="kr">비가 올 거예요.</span><span class="ph">„piga ol k!ojejo”</span><span class="tr">Będzie padać.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">6.</span>„Właśnie robię”: 고 있어요</h3>
+                    <p>Odpowiada polskiemu „właśnie teraz robię”, czyli czynności w trakcie. Zwykła forma 아요/어요 też może znaczyć „teraz”, ale 고 있어요 podkreśla, że czynność trwa.</p>
+                    <div class="schema">rdzeń + 고 있어요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">지금 밥 먹고 있어요.</span><span class="ph">„czigym pap mokk!o is!ojo”</span><span class="tr">Właśnie jem.</span></li>
+                        <li><span class="kr">뭐 하고 있어요?</span><span class="ph">„mło hago is!ojo?”</span><span class="tr">Co teraz robisz?</span></li>
+                        <li><span class="kr">비가 오고 있어요.</span><span class="ph">„piga ogo is!ojo”</span><span class="tr">Właśnie pada.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">7.</span>Przeczenie: 안 / 못 / 지 않아요</h3>
+                    <p>안 przed czasownikiem to zwykłe „nie”. 못 znaczy „nie mogę, nie umiem”. 지 않아요 po rdzeniu znaczy to samo co 안, ale brzmi staranniej.</p>
+                    <p>Przy czasownikach na 하다 przeczenie wstawia się tuż przed 하다: 공부 안 해요.</p>
+                    <div class="schema">안 + czasownik · 못 + czasownik · rdzeń + 지 않아요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">안 먹어요.</span><span class="ph">„an mogojo”</span><span class="tr">Nie jem.</span></li>
+                        <li><span class="kr">못 가요.</span><span class="ph">„mot k!ajo”</span><span class="tr">Nie mogę iść.</span></li>
+                        <li><span class="kr">맵지 않아요.</span><span class="ph">„mepcz!i anajo”</span><span class="tr">Nie jest ostre.</span></li>
+                        <li><span class="kr">공부 안 해요.</span><span class="ph">„kongbu anejo”</span><span class="tr">Nie uczę się.</span></li>
+                    </ul>
+                </div>
+                </div>
+                <div class="category-label">Grzeczność i rodzaje zdań</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">8.</span>Poziomy grzeczności</h3>
+                    <p>W polskim grzeczność to „pan / pani” zamiast „ty”. W koreańskim siedzi w końcówce każdego zdania. Na co dzień słychać trzy poziomy:</p>
+                    <p><b>습니다 / ㅂ니다</b>: formalny. Wiadomości, ogłoszenia, praca, wojsko.</p>
+                    <p><b>아요 / 어요</b>: grzeczny. Do obcych, starszych, w sklepie. Najbezpieczniejszy.</p>
+                    <p><b>bez 요</b> (반말): nieformalny. Przyjaciele, rodzina, młodsi. W serialach najczęstszy.</p>
+                    <div class="schema">갑니다 · 가요 · 가 = idę</div>
+                    <ul class="sentences">
+                        <li><span class="kr">감사합니다.</span><span class="ph">„kamsahamnida”</span><span class="tr">Dziękuję. (formalnie)</span></li>
+                        <li><span class="kr">고마워요.</span><span class="ph">„komałojo”</span><span class="tr">Dziękuję. (grzecznie)</span></li>
+                        <li><span class="kr">고마워.</span><span class="ph">„komało”</span><span class="tr">Dzięki. (do bliskich)</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">9.</span>Szacunek: (으)시</h3>
+                    <p>Wstawka 시 (po spółgłosce 으시) okazuje szacunek osobie, o której mówimy: rodzicom, nauczycielowi, klientowi. Nigdy nie używa się jej o sobie.</p>
+                    <p>W polskim najbliżej jest „czy pan raczy…”. Połączona z 아요 daje formę 세요.</p>
+                    <div class="schema">가 + 시 + 어요 → 가세요 · 읽 + 으세요 → 읽으세요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">어디 가세요?</span><span class="ph">„odi kasejo?”</span><span class="tr">Dokąd pan / pani idzie?</span></li>
+                        <li><span class="kr">선생님이 오셨어요.</span><span class="ph">„sonsengnimi osios!ojo”</span><span class="tr">Pan nauczyciel przyszedł.</span></li>
+                        <li><span class="kr">할머니가 주무세요.</span><span class="ph">„halmoniga czumusejo”</span><span class="tr">Babcia śpi.</span></li>
+                    </ul>
+                    <p class="note">Kilka czasowników ma osobne słowa grzecznościowe: 먹다 → 드시다 (jeść), 자다 → 주무시다 (spać), 있다 → 계시다 (być).</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">10.</span>Pytanie, prośba, propozycja</h3>
+                    <p>Forma 아요/어요 służy do wszystkiego, a o znaczeniu decyduje intonacja: opadająca to stwierdzenie, rosnąca to pytanie. Często znaczy też „zróbmy”.</p>
+                    <p>Grzeczna prośba to (으)세요 („proszę zrobić”). Propozycja „chodźmy” to formalnie (으)ㅂ시다, a nieformalnie 자.</p>
+                    <div class="schema">가요. ↘ idę · 가요? ↗ idziesz? · 가세요 proszę iść · 갑시다 / 가자 chodźmy</div>
+                    <ul class="sentences">
+                        <li><span class="kr">앉으세요.</span><span class="ph">„andzysejo”</span><span class="tr">Proszę usiąść.</span></li>
+                        <li><span class="kr">같이 먹어요!</span><span class="ph">„kaczi mogojo!”</span><span class="tr">Zjedzmy razem!</span></li>
+                        <li><span class="kr">가자!</span><span class="ph">„kadza!”</span><span class="tr">Chodźmy! (do bliskich)</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">11.</span>Końcówki emocjonalne: 네요, 죠, 군요</h3>
+                    <p>Zamiast samego 요 zdanie może kończyć się końcówką, która dodaje nastawienie mówiącego. Znaczenie słów się nie zmienia, a w serialach słychać je na każdym kroku.</p>
+                    <p><b>네요</b>: zaskoczenie, coś właśnie zauważam („o, …!”). <b>죠 / 지요</b>: „prawda?”, „no przecież”. <b>군요</b>: „aha, czyli…”, właśnie się czegoś dowiaduję.</p>
+                    <div class="schema">좋네요 · 좋죠? · 좋군요</div>
+                    <ul class="sentences">
+                        <li><span class="kr">맛있네요!</span><span class="ph">„masinnejo!”</span><span class="tr">O, ale smaczne!</span></li>
+                        <li><span class="kr">날씨 좋죠?</span><span class="ph">„nals!i czoczo?”</span><span class="tr">Ładna pogoda, prawda?</span></li>
+                        <li><span class="kr">아, 한국 사람이군요.</span><span class="ph">„a, hanguk s!aramigunjo”</span><span class="tr">Aha, czyli jesteś Koreańczykiem.</span></li>
+                    </ul>
+                    <p class="note">Wersje nieformalne: 네, 지, 구나.</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">12.</span>Chcę, mogę, muszę</h3>
+                    <p>Polskie czasowniki „chcieć, móc, musieć” to po koreańsku końcówki doczepiane do rdzenia głównego czasownika.</p>
+                    <div class="schema">고 싶어요 chcę · (으)ㄹ 수 있어요 mogę, umiem · 아야 / 어야 해요 muszę</div>
+                    <ul class="sentences">
+                        <li><span class="kr">한국에 가고 싶어요.</span><span class="ph">„hanguge kago sipojo”</span><span class="tr">Chcę pojechać do Korei.</span></li>
+                        <li><span class="kr">한국어를 할 수 있어요.</span><span class="ph">„hangugoryl hal s!u is!ojo”</span><span class="tr">Umiem mówić po koreańsku.</span></li>
+                        <li><span class="kr">지금 가야 해요.</span><span class="ph">„czigym kaja hejo”</span><span class="tr">Muszę już iść.</span></li>
+                    </ul>
+                    <p class="note">Przeczenia: (으)ㄹ 수 없어요 = nie mogę · 안 해도 돼요 = nie muszę.</p>
+                </div>
+                </div>
+                <div class="category-label">Łączenie zdań</div>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">13.</span>Końcówki łączące zdania</h3>
+                    <p>W polskim spójnik stoi między zdaniami („jem, ale…”). W koreańskim pierwsze zdanie dostaje końcówkę łączącą zamiast zwykłej końcówki. Czas i grzeczność pokazuje dopiero ostatni czasownik.</p>
+                    <div class="schema">고 i · 지만 ale · 아서 / 어서 bo, i potem · (으)니까 bo · (으)면 jeśli, gdy</div>
+                    <ul class="sentences">
+                        <li><span class="kr">밥을 먹고 자요.</span><span class="ph">„pabyl mokk!o czajo”</span><span class="tr">Zjem i idę spać.</span></li>
+                        <li><span class="kr">비싸지만 맛있어요.</span><span class="ph">„pis!adziman masis!ojo”</span><span class="tr">Drogie, ale smaczne.</span></li>
+                        <li><span class="kr">배가 고파서 먹었어요.</span><span class="ph">„pega kophaso mogos!ojo”</span><span class="tr">Zjadłem, bo byłem głodny.</span></li>
+                        <li><span class="kr">시간이 있으면 만나요.</span><span class="ph">„sigani is!ymjon mannajo”</span><span class="tr">Jeśli masz czas, spotkajmy się.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">14.</span>Słowa łączące na początku zdania</h3>
+                    <p>Jak polskie „i, więc, ale” na początku nowego zdania. Są bardzo częste zarówno w mowie, jak i w tekstach.</p>
+                    <div class="schema">그리고 i · 그래서 więc · 그런데 / 근데 ale, a tak w ogóle · 하지만 ale</div>
+                    <ul class="sentences">
+                        <li><span class="kr">그래서 늦었어요.</span><span class="ph">„kyreso nydzos!ojo”</span><span class="tr">Dlatego się spóźniłem.</span></li>
+                        <li><span class="kr">근데 뭐 먹어요?</span><span class="ph">„kynde mło mogojo?”</span><span class="tr">A tak w ogóle, co jemy?</span></li>
+                        <li><span class="kr">하지만 괜찮아요.</span><span class="ph">„hadziman kłenczanajo”</span><span class="tr">Ale nic nie szkodzi.</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">15.</span>Określenia przed rzeczownikiem</h3>
+                    <p>Polskie „człowiek, który je” albo „jedzący człowiek”. W koreańskim całe określenie stoi PRZED rzeczownikiem, a czasownik dostaje końcówkę zależną od czasu: 는 teraz, (으)ㄴ w przeszłości, (으)ㄹ w przyszłości. Przymiotniki w czasie teraźniejszym biorą (으)ㄴ.</p>
+                    <p>Przy czytaniu: gdy widzisz taką końcówkę, rzeczownik, którego dotyczy, stoi zaraz po niej.</p>
+                    <div class="schema">먹는 사람 ten, kto je · 먹은 사람 ten, kto zjadł · 먹을 사람 ten, kto zje · 예쁜 꽃 ładny kwiat</div>
+                    <ul class="sentences">
+                        <li><span class="kr">좋아하는 음식</span><span class="ph">„czoahanyn ymsik”</span><span class="tr">jedzenie, które lubię</span></li>
+                        <li><span class="kr">어제 본 영화</span><span class="ph">„odze pon jonghła”</span><span class="tr">film, który oglądałem wczoraj</span></li>
+                        <li><span class="kr">예쁜 옷</span><span class="ph">„jep!yn ot”</span><span class="tr">ładne ubranie</span></li>
+                        <li><span class="kr">내일 할 일</span><span class="ph">„neil hal lil”</span><span class="tr">rzecz do zrobienia jutro</span></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -512,6 +998,7 @@
                 });
             });
             if (!show(location.hash.slice(1))) show('alfabet');
+            window.addEventListener('hashchange', function () { show(location.hash.slice(1)); });
 
             // Kliknięcie kafelka kopiuje literę do schowka
             function copyText(text) {
