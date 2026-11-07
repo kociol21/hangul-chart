@@ -222,6 +222,22 @@
             color: #d9534f;
             margin: 8px 0 0;
         }
+        .card.copied::after {
+            content: "Skopiowano!";
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a4a7a;
+            color: #fff;
+            font-size: 9pt;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .card.copied { position: relative; }
         @media print {
             .tabs { display: none; }
         }
@@ -496,6 +512,37 @@
                 });
             });
             if (!show(location.hash.slice(1))) show('alfabet');
+
+            // Kliknięcie kafelka kopiuje literę do schowka
+            function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                }
+                return new Promise(function (resolve, reject) {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    var ok = document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    ok ? resolve() : reject();
+                });
+            }
+            document.querySelectorAll('#alfabet .card').forEach(function (card) {
+                card.title = 'Kliknij, aby skopiować';
+                card.addEventListener('click', function () {
+                    var letter = card.querySelector('.hangul').textContent.trim();
+                    copyText(letter).then(function () {
+                        card.classList.add('copied');
+                        clearTimeout(card._copiedTimer);
+                        card._copiedTimer = setTimeout(function () {
+                            card.classList.remove('copied');
+                        }, 1200);
+                    });
+                });
+            });
         })();
     </script>
 </body>
