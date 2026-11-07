@@ -9,6 +9,7 @@
             margin: 10mm;
             background-color: #ffffff;
         }
+        *, *::before, *::after { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -92,11 +93,6 @@
             color: #555;
             font-weight: bold;
         }
-        .romanization {
-            font-size: 8pt;
-            color: #999;
-            font-style: italic;
-        }
         .special-note {
             font-size: 7pt;
             color: #d9534f;
@@ -117,9 +113,128 @@
     z-index: 10;              /* Żeby powiększona karta była nad innymi */
     position: relative;
 }
+
+        /* ZAKŁADKI */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px 10px 0;
+            border-bottom: 2px solid #b2e0e6;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            font: inherit;
+            font-size: 13pt;
+            font-weight: bold;
+            color: #1a4a7a;
+            background: #f4fafb;
+            border: 2px solid #b2e0e6;
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            padding: 10px 22px;
+            cursor: pointer;
+            margin-bottom: -2px;
+            transition: background-color 0.2s ease;
+        }
+        .tab-btn:hover { background: #e0f4f7; }
+        .tab-btn.active {
+            background: #ffffff;
+            border-color: #1a4a7a;
+            border-bottom: 2px solid #ffffff;
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ZASADY WYMOWY */
+        .rules {
+            background-color: #f3f0fa;
+            border: 2px solid #d9d0f0;
+        }
+        .rules-intro {
+            text-align: center;
+            color: #555;
+            margin: 0 auto 20px;
+            max-width: 760px;
+            line-height: 1.5;
+        }
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+            gap: 15px;
+        }
+        .rule {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            page-break-inside: avoid;
+            transition: all 0.2s ease;
+        }
+        .rule:hover {
+            border-color: #1a4a7a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .rule h3 {
+            margin: 0 0 8px;
+            color: #2c3e50;
+            font-size: 13pt;
+        }
+        .rule h3 .num {
+            color: #d9534f;
+            margin-right: 6px;
+        }
+        .rule p {
+            margin: 0 0 10px;
+            line-height: 1.45;
+            font-size: 10.5pt;
+        }
+        .schema {
+            text-align: center;
+            font-size: 13pt;
+            font-weight: bold;
+            color: #000;
+            background: #fff9e6;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+        .examples {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .examples li {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: baseline;
+            gap: 6px;
+            padding: 4px 0;
+            border-top: 1px dashed #eee;
+        }
+        .examples .word { font-size: 14pt; font-weight: bold; color: #000; }
+        .examples .said { font-size: 14pt; color: #1a4a7a; }
+        .examples .pl { font-size: 10.5pt; color: #555; font-weight: bold; text-align: right; }
+        .rule .note {
+            font-size: 9pt;
+            color: #d9534f;
+            margin: 8px 0 0;
+        }
+        @media print {
+            .tabs { display: none; }
+        }
     </style>
 </head>
 <body>
+    <nav class="tabs" role="tablist">
+        <button class="tab-btn active" role="tab" data-tab="alfabet">Alfabet</button>
+        <button class="tab-btn" role="tab" data-tab="zasady">Zasady wymowy</button>
+    </nav>
+
+    <div class="container">
+        <div class="tab-panel active" id="alfabet" role="tabpanel">
             <!-- SPÓŁGŁOSKI -->
         <div class="section consonants">
             <div class="section-title">Spółgłoski</div>
@@ -127,26 +242,26 @@
             <div class="category-label">Podstawowe</div>
             <div class="grid">
                 <div class="grid-row">
-                    <div class="card"><span class="hangul">ㄱ</span><span class="pronunciation">g / k</span><span class="romanization">(g/k)</span></div>
-                    <div class="card"><span class="hangul">ㄴ</span><span class="pronunciation">n</span><span class="romanization">(n)</span></div>
-                    <div class="card"><span class="hangul">ㄷ</span><span class="pronunciation">d / t</span><span class="romanization">(d/t)</span></div>
-                    <div class="card"><span class="hangul">ㄹ</span><span class="pronunciation">r / l</span><span class="romanization">(r/l)</span></div>
-                    <div class="card"><span class="hangul">ㅁ</span><span class="pronunciation">m</span><span class="romanization">(m)</span></div>
-                    <div class="card"><span class="hangul">ㅂ</span><span class="pronunciation">b / p</span><span class="romanization">(b/p)</span></div>
-                    <div class="card"><span class="hangul">ㅅ</span><span class="pronunciation">s / ś</span><span class="romanization">(s)</span></div>
-                    <div class="card"><span class="hangul">ㅇ</span><span class="pronunciation">- / ng</span><span class="romanization">(ng)</span></div>
-                    <div class="card"><span class="hangul">ㅈ</span><span class="pronunciation">dź / dż</span><span class="romanization">(j)</span></div>
-                     <div class="card"><span class="hangul">ㅎ</span><span class="pronunciation">h</span><span class="romanization">(h)</span></div>
+                    <div class="card"><span class="hangul">ㄱ</span><span class="pronunciation">g / k</span></div>
+                    <div class="card"><span class="hangul">ㄴ</span><span class="pronunciation">n</span></div>
+                    <div class="card"><span class="hangul">ㄷ</span><span class="pronunciation">d / t</span></div>
+                    <div class="card"><span class="hangul">ㄹ</span><span class="pronunciation">r / l</span></div>
+                    <div class="card"><span class="hangul">ㅁ</span><span class="pronunciation">m</span></div>
+                    <div class="card"><span class="hangul">ㅂ</span><span class="pronunciation">b / p</span></div>
+                    <div class="card"><span class="hangul">ㅅ</span><span class="pronunciation">s / ś</span></div>
+                    <div class="card"><span class="hangul">ㅇ</span><span class="pronunciation">- / ng</span></div>
+                    <div class="card"><span class="hangul">ㅈ</span><span class="pronunciation">dź / dż</span></div>
+                     <div class="card"><span class="hangul">ㅎ</span><span class="pronunciation">h</span></div>
                 </div>
             </div>
 
             <div class="category-label">Aspirowane (z wydechem)</div>
             <div class="grid">
                 <div class="grid-row">
-                    <div class="card" style="width: 25%"><span class="hangul">ㅋ</span><span class="pronunciation">kh</span><span class="romanization">(k)</span></div>
-                    <div class="card" style="width: 25%"><span class="hangul">ㅌ</span><span class="pronunciation">th</span><span class="romanization">(t)</span></div>
-                    <div class="card" style="width: 25%"><span class="hangul">ㅍ</span><span class="pronunciation">ph</span><span class="romanization">(p)</span></div>
-                    <div class="card" style="width: 25%"><span class="hangul">ㅊ</span><span class="pronunciation">ć / cz</span><span class="romanization">(ch)</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅋ</span><span class="pronunciation">kh</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅌ</span><span class="pronunciation">th</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅍ</span><span class="pronunciation">ph</span></div>
+                    <div class="card" style="width: 25%"><span class="hangul">ㅊ</span><span class="pronunciation">ć / cz</span></div>
                    
                 </div>
             </div>
@@ -154,11 +269,11 @@
             <div class="category-label">Podwójne (mocne)</div>
             <div class="grid">
                 <div class="grid-row">
-                    <div class="card" style="width: 20%"><span class="hangul">ㄲ</span><span class="pronunciation">k!</span><span class="romanization">(kk)</span></div>
-                    <div class="card" style="width: 20%"><span class="hangul">ㄸ</span><span class="pronunciation">t!</span><span class="romanization">(tt)</span></div>
-                    <div class="card" style="width: 20%"><span class="hangul">ㅃ</span><span class="pronunciation">p!</span><span class="romanization">(pp)</span></div>
-                    <div class="card" style="width: 20%"><span class="hangul">ㅆ</span><span class="pronunciation">s!</span><span class="romanization">(ss)</span></div>
-                    <div class="card" style="width: 20%"><span class="hangul">ㅉ</span><span class="pronunciation">ć! / cz!</span><span class="romanization">(jj)</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㄲ</span><span class="pronunciation">k!</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㄸ</span><span class="pronunciation">t!</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅃ</span><span class="pronunciation">p!</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅆ</span><span class="pronunciation">s!</span></div>
+                    <div class="card" style="width: 20%"><span class="hangul">ㅉ</span><span class="pronunciation">ć! / cz!</span></div>
                 </div>
             </div>
         </div>
@@ -203,5 +318,185 @@
             </div>
         </div>
     </div>
+
+        <div class="tab-panel" id="zasady" role="tabpanel">
+            <div class="section rules">
+                <div class="section-title">Zasady wymowy</div>
+                <p class="rules-intro">Hangul zapisuje słowa „jak się piszą”, ale w mowie sąsiednie dźwięki wpływają na siebie. W nawiasie kwadratowym jest to, jak słowo naprawdę brzmi, a w cudzysłowie polski odpowiednik. Wykrzyknik oznacza mocną spółgłoskę.</p>
+                <div class="rules-grid">
+                <div class="rule">
+                    <h3><span class="num">1.</span>Przenoszenie spółgłoski końcowej</h3>
+                    <p>Gdy następna sylaba zaczyna się od niemego ㅇ, spółgłoska z dołu sylaby „przeskakuje” do niej i czyta się ją na początku kolejnej sylaby.</p>
+                    <div class="schema">음 + 악 → 으 + 막</div>
+                    <ul class="examples">
+                        <li><span class="word">음악</span><span class="said">[으막]</span><span class="pl">„ymak”</span></li>
+                        <li><span class="word">한국어</span><span class="said">[한구거]</span><span class="pl">„hanguko”</span></li>
+                        <li><span class="word">옷이</span><span class="said">[오시]</span><span class="pl">„osi”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">2.</span>Uproszczenie końcówek</h3>
+                    <p>Na końcu sylaby wymawia się tylko 7 dźwięków: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅇ. Pozostałe spółgłoski „zlewają się” z najbliższym z nich.</p>
+                    <div class="schema">ㅋ ㄲ → ㄱ · ㅅ ㅆ ㅈ ㅊ ㅌ ㅎ → ㄷ · ㅍ → ㅂ</div>
+                    <ul class="examples">
+                        <li><span class="word">옷</span><span class="said">[옫]</span><span class="pl">„ot”</span></li>
+                        <li><span class="word">꽃</span><span class="said">[꼳]</span><span class="pl">„k!ot”</span></li>
+                        <li><span class="word">앞</span><span class="said">[압]</span><span class="pl">„ap”</span></li>
+                        <li><span class="word">부엌</span><span class="said">[부억]</span><span class="pl">„puok”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">3.</span>Podwójne końcówki</h3>
+                    <p>Gdy na dole sylaby są dwie spółgłoski, a dalej nie ma samogłoski, czyta się tylko jedną z nich. Przed samogłoską druga przechodzi do następnej sylaby.</p>
+                    <div class="schema">ㄺ → ㄱ · ㅄ → ㅂ · ㄼ → ㄹ</div>
+                    <ul class="examples">
+                        <li><span class="word">닭</span><span class="said">[닥]</span><span class="pl">„tak”</span></li>
+                        <li><span class="word">값</span><span class="said">[갑]</span><span class="pl">„kap”</span></li>
+                        <li><span class="word">여덟</span><span class="said">[여덜]</span><span class="pl">„jodol”</span></li>
+                        <li><span class="word">읽어</span><span class="said">[일거]</span><span class="pl">„ilgo”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">4.</span>Nazalizacja</h3>
+                    <p>Końcówka ㅂ, ㄷ lub ㄱ przed ㄴ albo ㅁ staje się nosowa: ㅂ brzmi jak „m”, ㄷ jak „n”, a ㄱ jak „ng”.</p>
+                    <div class="schema">ㅂ → ㅁ · ㄷ → ㄴ · ㄱ → ㅇ   (przed ㄴ ㅁ)</div>
+                    <ul class="examples">
+                        <li><span class="word">합니다</span><span class="said">[함니다]</span><span class="pl">„hamnida”</span></li>
+                        <li><span class="word">믿는</span><span class="said">[민는]</span><span class="pl">„minnyn”</span></li>
+                        <li><span class="word">국물</span><span class="said">[궁물]</span><span class="pl">„kungmul”</span></li>
+                        <li><span class="word">앞날</span><span class="said">[암날]</span><span class="pl">„amnal”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">5.</span>ㄹ zamienia się w ㄴ</h3>
+                    <p>Po końcówkach ㅁ i ㅇ spółgłoska ㄹ czyta się jak „n”. Po ㄱ i ㅂ zmieniają się obie strony naraz.</p>
+                    <div class="schema">ㅁ/ㅇ + ㄹ → ㅁ/ㅇ + ㄴ</div>
+                    <ul class="examples">
+                        <li><span class="word">음료</span><span class="said">[음뇨]</span><span class="pl">„ymnjo”</span></li>
+                        <li><span class="word">종로</span><span class="said">[종노]</span><span class="pl">„czongno”</span></li>
+                        <li><span class="word">국립</span><span class="said">[궁닙]</span><span class="pl">„kungnip”</span></li>
+                        <li><span class="word">협력</span><span class="said">[혐녁]</span><span class="pl">„hjomnjok”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">6.</span>Liquidizacja</h3>
+                    <p>Gdy ㄴ stoi obok ㄹ (przed nim lub po nim), ㄴ też zamienia się w ㄹ i wychodzi podwójne „ll”.</p>
+                    <div class="schema">ㄴ + ㄹ → ㄹ + ㄹ · ㄹ + ㄴ → ㄹ + ㄹ</div>
+                    <ul class="examples">
+                        <li><span class="word">신라</span><span class="said">[실라]</span><span class="pl">„silla”</span></li>
+                        <li><span class="word">연락</span><span class="said">[열락]</span><span class="pl">„jollak”</span></li>
+                        <li><span class="word">설날</span><span class="said">[설랄]</span><span class="pl">„sollal”</span></li>
+                        <li><span class="word">칼날</span><span class="said">[칼랄]</span><span class="pl">„khallal”</span></li>
+                    </ul>
+                    <p class="note">Wyjątki w niektórych złożeniach, np. 의견란 [의견난].</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">7.</span>Palatalizacja</h3>
+                    <p>Końcówka ㄷ lub ㅌ przed 이 (albo 히) zmienia się w ㅈ lub ㅊ.</p>
+                    <div class="schema">ㄷ + 이 → 지 · ㅌ + 이 → 치</div>
+                    <ul class="examples">
+                        <li><span class="word">같이</span><span class="said">[가치]</span><span class="pl">„kaczi”</span></li>
+                        <li><span class="word">굳이</span><span class="said">[구지]</span><span class="pl">„kudzi”</span></li>
+                        <li><span class="word">해돋이</span><span class="said">[해도지]</span><span class="pl">„hedodzi”</span></li>
+                        <li><span class="word">닫히다</span><span class="said">[다치다]</span><span class="pl">„taczida”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">8.</span>Aspiracja</h3>
+                    <p>ㅎ stojące obok ㄱ, ㄷ, ㅂ lub ㅈ łączy się z nimi w spółgłoskę z wydechem.</p>
+                    <div class="schema">ㅎ + ㄱ ㄷ ㅂ ㅈ → ㅋ ㅌ ㅍ ㅊ</div>
+                    <ul class="examples">
+                        <li><span class="word">좋다</span><span class="said">[조타]</span><span class="pl">„czotha”</span></li>
+                        <li><span class="word">축하</span><span class="said">[추카]</span><span class="pl">„czukha”</span></li>
+                        <li><span class="word">입학</span><span class="said">[이팍]</span><span class="pl">„iphak”</span></li>
+                        <li><span class="word">많다</span><span class="said">[만타]</span><span class="pl">„mantha”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">9.</span>Znikające ㅎ</h3>
+                    <p>Końcówka ㅎ przed samogłoską milknie, przed ㄴ zamienia się w „n”, a przed ㅅ daje mocne ㅆ.</p>
+                    <div class="schema">ㅎ + ㅇ → ∅ · ㅎ + ㄴ → ㄴ + ㄴ · ㅎ + ㅅ → ㅆ</div>
+                    <ul class="examples">
+                        <li><span class="word">좋아요</span><span class="said">[조아요]</span><span class="pl">„czoajo”</span></li>
+                        <li><span class="word">싫어</span><span class="said">[시러]</span><span class="pl">„siro”</span></li>
+                        <li><span class="word">놓는</span><span class="said">[논는]</span><span class="pl">„nonnyn”</span></li>
+                        <li><span class="word">좋습니다</span><span class="said">[조씀니다]</span><span class="pl">„czos!ymnida”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">10.</span>Tensyfikacja</h3>
+                    <p>Po końcówkach brzmiących jak ㄱ, ㄷ, ㅂ następne ㄱ ㄷ ㅂ ㅅ ㅈ stają się mocne. To samo dzieje się po ㄹ w formie przyszłej.</p>
+                    <div class="schema">ㄱ ㄷ ㅂ ㅅ ㅈ → ㄲ ㄸ ㅃ ㅆ ㅉ</div>
+                    <ul class="examples">
+                        <li><span class="word">학교</span><span class="said">[학꾜]</span><span class="pl">„hakk!jo”</span></li>
+                        <li><span class="word">식당</span><span class="said">[식땅]</span><span class="pl">„sikt!ang”</span></li>
+                        <li><span class="word">국밥</span><span class="said">[국빱]</span><span class="pl">„kukp!ap”</span></li>
+                        <li><span class="word">할 수 있다</span><span class="said">[할 쑤 읻따]</span><span class="pl">„hal s!u itt!a”</span></li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">11.</span>Dodatkowe ㄴ</h3>
+                    <p>W słowach złożonych, gdy pierwsza część kończy się spółgłoską, a druga zaczyna od 이 야 여 요 유, pojawia się dodatkowe „n”.</p>
+                    <div class="schema">ㅁ + 이 → ㅁ + 니</div>
+                    <ul class="examples">
+                        <li><span class="word">솜이불</span><span class="said">[솜니불]</span><span class="pl">„somnibul”</span></li>
+                        <li><span class="word">색연필</span><span class="said">[생년필]</span><span class="pl">„sengnjonphil”</span></li>
+                        <li><span class="word">한여름</span><span class="said">[한녀름]</span><span class="pl">„hannjorym”</span></li>
+                        <li><span class="word">막일</span><span class="said">[망닐]</span><span class="pl">„mangnil”</span></li>
+                    </ul>
+                    <p class="note">Po ㄹ dodane ㄴ zmienia się w ㄹ: 물약 [물략].</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">12.</span>Wymowa 의</h3>
+                    <p>Samogłoska 의 zmienia brzmienie zależnie od miejsca w słowie i roli.</p>
+                    <div class="schema">początek: 의 · środek: 이 · „czyjś”: 에</div>
+                    <ul class="examples">
+                        <li><span class="word">의사</span><span class="said">[의사]</span><span class="pl">„yisa”</span></li>
+                        <li><span class="word">회의</span><span class="said">[회이]</span><span class="pl">„hwei”</span></li>
+                        <li><span class="word">나의</span><span class="said">[나에]</span><span class="pl">„nae”</span></li>
+                        <li><span class="word">희망</span><span class="said">[히망]</span><span class="pl">„himang”</span></li>
+                    </ul>
+                    <p class="note">Po spółgłosce 의 zawsze czyta się jak „i”, jak w 희망.</p>
+                </div>
+                <div class="rule">
+                    <h3><span class="num">13.</span>Dźwięczność</h3>
+                    <p>ㄱ ㄷ ㅂ ㅈ na początku słowa brzmią prawie jak k, t, p, ć. Między samogłoskami i po ㄴ ㄹ ㅁ ㅇ stają się dźwięczne: g, d, b, dź.</p>
+                    <div class="schema">początek: k t p ć · w środku: g d b dź</div>
+                    <ul class="examples">
+                        <li><span class="word">바보</span><span class="said">[바보]</span><span class="pl">„pabo”</span></li>
+                        <li><span class="word">고기</span><span class="said">[고기]</span><span class="pl">„kogi”</span></li>
+                        <li><span class="word">감자</span><span class="said">[감자]</span><span class="pl">„kamdza”</span></li>
+                        <li><span class="word">두부</span><span class="said">[두부]</span><span class="pl">„tubu”</span></li>
+                    </ul>
+                    <p class="note">Hangul tu się nie zmienia, zmienia się tylko brzmienie.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var buttons = document.querySelectorAll('.tab-btn');
+            function show(name) {
+                var found = false;
+                buttons.forEach(function (b) {
+                    var on = b.dataset.tab === name;
+                    if (on) found = true;
+                    b.classList.toggle('active', on);
+                    b.setAttribute('aria-selected', on);
+                    document.getElementById(b.dataset.tab).classList.toggle('active', on);
+                });
+                return found;
+            }
+            buttons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    show(b.dataset.tab);
+                    history.replaceState(null, '', '#' + b.dataset.tab);
+                });
+            });
+            if (!show(location.hash.slice(1))) show('alfabet');
+        })();
+    </script>
 </body>
 </html>
