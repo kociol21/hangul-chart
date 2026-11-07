@@ -1,8 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hangul – ściągawka</title>
     <style>
         @page {
             size: A4;
@@ -300,6 +301,15 @@
         .sentences .kr { font-size: 14pt; font-weight: bold; color: #000; }
         .sentences .ph { font-size: 10.5pt; color: #1a4a7a; }
         .sentences .tr { font-size: 10.5pt; color: #555; }
+        @media (max-width: 700px) {
+            .grid { display: block; }
+            .grid-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 8px; }
+            .card { display: block; width: calc(25% - 8px) !important; min-width: 64px; padding: 8px 4px; }
+            .hangul { font-size: 22pt; }
+            .pronunciation { font-size: 11pt; }
+            .section { padding: 14px 10px; }
+            .tab-btn { padding: 8px 14px; font-size: 12pt; }
+        }
         @media print {
             .tabs, .main-tabs { display: none; }
         }
@@ -335,7 +345,7 @@
                     <div class="card"><span class="hangul">ㅂ</span><span class="pronunciation">b / p</span></div>
                     <div class="card"><span class="hangul">ㅅ</span><span class="pronunciation">s / ś</span></div>
                     <div class="card"><span class="hangul">ㅇ</span><span class="pronunciation">- / ng</span></div>
-                    <div class="card"><span class="hangul">ㅈ</span><span class="pronunciation">dź / dż</span></div>
+                    <div class="card"><span class="hangul">ㅈ</span><span class="pronunciation">dz / cz</span></div>
                      <div class="card"><span class="hangul">ㅎ</span><span class="pronunciation">h</span></div>
                 </div>
             </div>
@@ -415,7 +425,7 @@
                     <div class="schema">음 + 악 → 으 + 막</div>
                     <ul class="examples">
                         <li><span class="word">음악</span><span class="said">[으막]</span><span class="pl">„ymak”</span></li>
-                        <li><span class="word">한국어</span><span class="said">[한구거]</span><span class="pl">„hanguko”</span></li>
+                        <li><span class="word">한국어</span><span class="said">[한구거]</span><span class="pl">„hangugo”</span></li>
                         <li><span class="word">옷이</span><span class="said">[오시]</span><span class="pl">„osi”</span></li>
                     </ul>
                 </div>
@@ -443,7 +453,7 @@
                 </div>
                 <div class="rule">
                     <h3><span class="num">4.</span>Nazalizacja</h3>
-                    <p>Końcówka ㅂ, ㄷ lub ㄱ przed ㄴ albo ㅁ staje się nosowa: ㅂ brzmi jak „m”, ㄷ jak „n”, a ㄱ jak „ng”.</p>
+                    <p>Końcówka brzmiąca jak ㅂ, ㄷ lub ㄱ (patrz zasada 2) przed ㄴ albo ㅁ staje się nosowa: ㅂ brzmi jak „m”, ㄷ jak „n”, a ㄱ jak „ng”.</p>
                     <div class="schema">ㅂ → ㅁ · ㄷ → ㄴ · ㄱ → ㅇ   (przed ㄴ ㅁ)</div>
                     <ul class="examples">
                         <li><span class="word">합니다</span><span class="said">[함니다]</span><span class="pl">„hamnida”</span></li>
@@ -537,7 +547,7 @@
                     <div class="schema">początek: 의 · środek: 이 · „czyjś”: 에</div>
                     <ul class="examples">
                         <li><span class="word">의사</span><span class="said">[의사]</span><span class="pl">„yisa”</span></li>
-                        <li><span class="word">회의</span><span class="said">[회이]</span><span class="pl">„hwei”</span></li>
+                        <li><span class="word">회의</span><span class="said">[회이]</span><span class="pl">„hłei”</span></li>
                         <li><span class="word">나의</span><span class="said">[나에]</span><span class="pl">„nae”</span></li>
                         <li><span class="word">희망</span><span class="said">[히망]</span><span class="pl">„himang”</span></li>
                     </ul>
@@ -545,8 +555,8 @@
                 </div>
                 <div class="rule">
                     <h3><span class="num">13.</span>Dźwięczność</h3>
-                    <p>ㄱ ㄷ ㅂ ㅈ na początku słowa brzmią prawie jak k, t, p, ć. Między samogłoskami i po ㄴ ㄹ ㅁ ㅇ stają się dźwięczne: g, d, b, dź.</p>
-                    <div class="schema">początek: k t p ć · w środku: g d b dź</div>
+                    <p>ㄱ ㄷ ㅂ ㅈ na początku słowa brzmią prawie jak k, t, p, cz. Między samogłoskami i po ㄴ ㄹ ㅁ ㅇ stają się dźwięczne: g, d, b, dz.</p>
+                    <div class="schema">początek: k t p cz · w środku: g d b dz</div>
                     <ul class="examples">
                         <li><span class="word">바보</span><span class="said">[바보]</span><span class="pl">„pabo”</span></li>
                         <li><span class="word">고기</span><span class="said">[고기]</span><span class="pl">„kogi”</span></li>
@@ -899,7 +909,7 @@
                 <div class="rule">
                     <h3><span class="num">9.</span>Szacunek: (으)시</h3>
                     <p>Wstawka 시 (po spółgłosce 으시) okazuje szacunek osobie, o której mówimy: rodzicom, nauczycielowi, klientowi. Nigdy nie używa się jej o sobie.</p>
-                    <p>W polskim najbliżej jest „czy pan raczy…”. Połączona z 아요 daje formę 세요.</p>
+                    <p>W polskim najbliżej jest „czy pan raczy…”. Połączona z 어요 daje formę 세요.</p>
                     <div class="schema">가 + 시 + 어요 → 가세요 · 읽 + 으세요 → 읽으세요</div>
                     <ul class="sentences">
                         <li><span class="kr">어디 가세요?</span><span class="ph">„odi kasejo?”</span><span class="tr">Dokąd pan / pani idzie?</span></li>
@@ -936,7 +946,7 @@
                     <p>Polskie czasowniki „chcieć, móc, musieć” to po koreańsku końcówki doczepiane do rdzenia głównego czasownika.</p>
                     <div class="schema">고 싶어요 chcę · (으)ㄹ 수 있어요 mogę, umiem · 아야 / 어야 해요 muszę</div>
                     <ul class="sentences">
-                        <li><span class="kr">한국에 가고 싶어요.</span><span class="ph">„hanguge kago sipojo”</span><span class="tr">Chcę pojechać do Korei.</span></li>
+                        <li><span class="kr">한국에 가고 싶어요.</span><span class="ph">„hanguge kago siphojo”</span><span class="tr">Chcę pojechać do Korei.</span></li>
                         <li><span class="kr">한국어를 할 수 있어요.</span><span class="ph">„hangugoryl hal s!u is!ojo”</span><span class="tr">Umiem mówić po koreańsku.</span></li>
                         <li><span class="kr">지금 가야 해요.</span><span class="ph">„czigym kaja hejo”</span><span class="tr">Muszę już iść.</span></li>
                     </ul>
