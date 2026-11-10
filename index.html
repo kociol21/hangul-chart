@@ -1703,7 +1703,19 @@
             function pickVoice() {
                 if (!synth) return;
                 var voices = synth.getVoices();
-                koVoice = voices.filter(function (v) { return /^ko([-_]|$)/i.test(v.lang); })[0] || null;
+                var korean = voices.filter(function (v) { return /^ko([-_]|$)/i.test(v.lang); });
+                // Najładniej brzmi SunHi (Edge, wymaga internetu), potem głosy „Natural”/„Online”
+                // i Google. Głosy „Multilingual” mają słaby koreański akcent, więc idą na koniec.
+                function score(v) {
+                    var n = v.name || '';
+                    if (/SunHi/i.test(n)) return 0;
+                    if (/Multilingual/i.test(n)) return 4;
+                    if (/Natural|Online/i.test(n)) return 1;
+                    if (/Google/i.test(n)) return 2;
+                    return 3;
+                }
+                korean.sort(function (a, b) { return score(a) - score(b); });
+                koVoice = korean[0] || null;
                 return voices.length;
             }
             if (synth) {
@@ -1737,6 +1749,18 @@
                 var count = pickVoice();
                 // Lista głosów jest znana, a koreańskiego brak: polski lektor czytałby bzdury.
                 if (count && !koVoice) { showToast(NO_VOICE); return; }
+                if (!count && 'onvoiceschanged' in synth && !speak._waited) {
+                    // Głosy jeszcze się ładują: czekamy chwilę, żeby nie czytać przypadkowym głosem.
+                    speak._waited = true;
+                    var go = function () {
+                        synth.removeEventListener('voiceschanged', go);
+                        clearTimeout(t);
+                        speak(text, btn);
+                    };
+                    var t = setTimeout(go, 1500);
+                    synth.addEventListener('voiceschanged', go);
+                    return;
+                }
                 synth.cancel();
                 if (current) current.classList.remove('speaking');
                 var u = new SpeechSynthesisUtterance(text);
