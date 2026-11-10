@@ -317,6 +317,60 @@
         @media print {
             .tabs, .main-tabs { display: none; }
         }
+        /* LEKTOR (czytanie na głos) */
+        .say {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            margin-left: 6px;
+            vertical-align: middle;
+            border: 1px solid #b2e0e6;
+            border-radius: 50%;
+            background: #f4fafb;
+            color: #1a4a7a;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+        }
+        .say svg { width: 15px; height: 15px; display: block; }
+        .say:hover, .say:focus-visible { background: #1a4a7a; color: #fff; border-color: #1a4a7a; }
+        .say.speaking { background: #d9534f; color: #fff; border-color: #d9534f; transform: scale(1.1); }
+        .card { position: relative; }
+        .card .say {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            margin: 0;
+            width: 24px;
+            height: 24px;
+        }
+        .card .say svg { width: 13px; height: 13px; }
+        .tts-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            max-width: min(520px, calc(100% - 32px));
+            background: #2c3e50;
+            color: #fff;
+            font-size: 10.5pt;
+            line-height: 1.45;
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            z-index: 100;
+            display: none;
+        }
+        .tts-toast.show { display: block; }
+        @media print {
+            .say, .tts-toast { display: none !important; }
+        }
+        @media (max-width: 700px) {
+            .card { padding-top: 22px !important; }
+            .card .say { top: 3px; right: 3px; width: 22px; height: 22px; }
+        }
     </style>
 </head>
 <body>
@@ -1625,6 +1679,103 @@
                         }, 1200);
                     });
                 });
+            });
+
+            // Lektor: ikona głośnika czyta literę (jako sylabę) albo przykład
+            var CHO = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+            var JUNG = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ';
+            function syllable(ci, vi, fi) {
+                return String.fromCharCode(0xAC00 + (ci * 21 + vi) * 28 + (fi || 0));
+            }
+            // Pojedynczą literę lektor czyta jako jej nazwę albo wcale,
+            // więc czytamy sylabę: spółgłoska + ㅏ, samogłoska po niemym ㅇ.
+            function letterToSpeech(ch) {
+                if (ch === 'ㅇ') return syllable(11, 0, 21); // 앙: ㅇ słychać dopiero na końcu
+                var c = CHO.indexOf(ch);
+                if (c >= 0) return syllable(c, 0);
+                var v = JUNG.indexOf(ch);
+                if (v >= 0) return syllable(11, v);
+                return ch;
+            }
+
+            var synth = window.speechSynthesis;
+            var koVoice = null;
+            function pickVoice() {
+                if (!synth) return;
+                var voices = synth.getVoices();
+                koVoice = voices.filter(function (v) { return /^ko([-_]|$)/i.test(v.lang); })[0] || null;
+                return voices.length;
+            }
+            if (synth) {
+                pickVoice();
+                if ('onvoiceschanged' in synth) synth.addEventListener('voiceschanged', pickVoice);
+            }
+
+            var toast = document.createElement('div');
+            toast.className = 'tts-toast';
+            toast.setAttribute('role', 'status');
+            document.body.appendChild(toast);
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(toast._t);
+                toast._t = setTimeout(function () { toast.classList.remove('show'); }, 7000);
+            }
+            toast.addEventListener('click', function () { toast.classList.remove('show'); });
+
+            var NO_VOICE = 'Twoja przeglądarka nie ma koreańskiego głosu lektora. ' +
+                'Na Windows dodaj go w Ustawienia → Czas i język → Mowa (język koreański), ' +
+                'na Androidzie w ustawieniach syntezy mowy Google. Potem odśwież stronę. ' +
+                'Najpewniej działa w Chrome i Edge.';
+
+            var current = null;
+            function speak(text, btn) {
+                if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
+                    showToast('Ta przeglądarka nie obsługuje lektora. Spróbuj w Chrome, Edge albo Safari.');
+                    return;
+                }
+                var count = pickVoice();
+                // Lista głosów jest znana, a koreańskiego brak: polski lektor czytałby bzdury.
+                if (count && !koVoice) { showToast(NO_VOICE); return; }
+                synth.cancel();
+                if (current) current.classList.remove('speaking');
+                var u = new SpeechSynthesisUtterance(text);
+                u.lang = 'ko-KR';
+                if (koVoice) { try { u.voice = koVoice; } catch (e) {} }
+                u.rate = 0.8;
+                current = btn;
+                btn.classList.add('speaking');
+                var done = function () { btn.classList.remove('speaking'); if (current === btn) current = null; };
+                u.onend = done;
+                u.onerror = function (e) {
+                    done();
+                    if (e.error !== 'interrupted' && e.error !== 'canceled') showToast(NO_VOICE);
+                };
+                synth.speak(u);
+            }
+
+            var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                '<path d="M11 5 6 9H2v6h4l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+            function addSpeaker(el, text, label) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'say';
+                b.innerHTML = ICON;
+                b.title = label;
+                b.setAttribute('aria-label', label);
+                b.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    speak(text, b);
+                });
+                el.appendChild(b);
+            }
+            document.querySelectorAll('#alfabet .card').forEach(function (card) {
+                var letter = card.querySelector('.hangul').textContent.trim();
+                var spoken = letterToSpeech(letter);
+                addSpeaker(card, spoken, 'Odsłuchaj (' + spoken + ')');
+            });
+            document.querySelectorAll('.examples .word, .sentences .kr').forEach(function (el) {
+                addSpeaker(el, el.textContent.trim(), 'Odsłuchaj');
             });
         })();
     </script>
